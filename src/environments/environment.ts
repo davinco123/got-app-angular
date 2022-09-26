@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  gotAPI: 'https://www.anapioficeandfire.com/api/',
+  gotAPI: 'https://www.anapioficeandfire.com/api',
 };
 
 /*

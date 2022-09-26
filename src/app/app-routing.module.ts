@@ -4,15 +4,13 @@ import { RouterModule, PreloadAllModules, Routes } from '@angular/router';
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/resources',
+    redirectTo: '/books',
     pathMatch: 'full',
   },
   {
-    // path: 'resources',
-    // loadChildren: () =>
-    //   import('./domains/resources/resources.module').then(
-    //     (m) => m.ResourcesModule
-    //   ),
+    path: 'books',
+    loadChildren: () =>
+      import('./domains/books/books.module').then((m) => m.BooksModule),
   },
 ];
 
