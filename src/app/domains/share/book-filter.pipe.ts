@@ -17,7 +17,8 @@ export class BookFilterPipe implements PipeTransform {
     return books.filter((book) => {
       return (
         book.name.toLocaleLowerCase().includes(searchText) ||
-        book.publisher.toLocaleLowerCase().includes(searchText)
+        book.publisher.toLocaleLowerCase().includes(searchText) ||
+        book.mediaType.toLocaleLowerCase().includes(searchText)
       );
     });
   }
