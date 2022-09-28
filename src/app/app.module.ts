@@ -10,6 +10,7 @@ import { ShareModule } from './domains/share/share.module';
 import * as fromApp from './store/app.reducer';
 import { HeaderComponent } from './domains/header/header.component';
 import { BooksEffects } from './domains/books/store/books.effects';
+import { CharactersEffects } from './domains/characters/store/characters.effects';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -17,7 +18,7 @@ import { BooksEffects } from './domains/books/store/books.effects';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([BooksEffects]),
+    EffectsModule.forRoot([BooksEffects, CharactersEffects]),
     ShareModule,
   ],
   providers: [],

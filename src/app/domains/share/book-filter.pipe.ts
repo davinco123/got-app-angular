@@ -12,13 +12,18 @@ export class BookFilterPipe implements PipeTransform {
     if (!searchText) {
       return books;
     }
+
     searchText = searchText.toLocaleLowerCase();
 
     return books.filter((book) => {
       return (
         book.name.toLocaleLowerCase().includes(searchText) ||
         book.publisher.toLocaleLowerCase().includes(searchText) ||
-        book.mediaType.toLocaleLowerCase().includes(searchText)
+        book.mediaType.toLocaleLowerCase().includes(searchText) ||
+        book.authors.find((author) => {
+          return author.toLocaleLowerCase().includes(searchText);
+        }) ||
+        book.isbn.includes(searchText)
       );
     });
   }

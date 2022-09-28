@@ -12,6 +12,13 @@ const appRoutes: Routes = [
     loadChildren: () =>
       import('./domains/books/books.module').then((m) => m.BooksModule),
   },
+  {
+    path: 'characters',
+    loadChildren: () =>
+      import('./domains/characters/characters.module').then(
+        (m) => m.CharactersModule
+      ),
+  },
 ];
 
 @NgModule({
