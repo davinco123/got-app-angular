@@ -6,7 +6,6 @@ import { ShareModule } from '../share/share.module';
 import { CharactersItemComponent } from './components/characters-list/characters-item/characters-item.component';
 import { CharactersListComponent } from './components/characters-list/characters-list.component';
 import { CharactersPageComponent } from './pages/characters-page/characters-page.component';
-import { CharactersEffects } from './store/characters.effects';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { CharactersEffects } from './store/characters.effects';
         component: CharactersPageComponent,
       },
     ]),
-    EffectsModule.forFeature([CharactersEffects]),
   ],
   providers: [],
 })

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { House } from '../../models/houses.model';
 import { HousesService } from '../../services/houses.service';
@@ -11,7 +11,6 @@ import { HousesService } from '../../services/houses.service';
 })
 export class HousesListComponent {
   public houseList$: Observable<House[]>;
-  private storeSubscription: Subscription;
 
   constructor(private housesService: HousesService) {
     this.houseList$ = housesService.housesList$;
