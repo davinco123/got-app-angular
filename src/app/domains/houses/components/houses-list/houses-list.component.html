@@ -1,0 +1,6 @@
+<div class="form-group search-bar">
+    <input class="form-control" id="search-text" aria-describedby="search-text" placeholder="Enter text to search"
+        autofocus>
+</div>
+
+<app-houses-item [houseList]="houseList$ | async" (scrollingFinished)="onScrollingFinished()"></app-houses-item>

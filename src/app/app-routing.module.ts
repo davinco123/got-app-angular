@@ -19,6 +19,11 @@ const appRoutes: Routes = [
         (m) => m.CharactersModule
       ),
   },
+  {
+    path: 'houses',
+    loadChildren: () =>
+      import('./domains/houses/houses.module').then((m) => m.HousesModule),
+  },
 ];
 
 @NgModule({

@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-
-import * as fromApp from '../../../../store/app.reducer';
-import * as BooksActions from '../../store/books.actions';
+import { BooksService } from '../../services/books.service';
 
 @Component({
   selector: 'app-books-page',
@@ -10,9 +7,9 @@ import * as BooksActions from '../../store/books.actions';
   styleUrls: ['./books-page.component.scss'],
 })
 export class BooksPageComponent implements OnInit {
-  constructor(private booksStore: Store<fromApp.AppState>) {}
+  constructor(private booksService: BooksService) {}
 
   ngOnInit(): void {
-    this.booksStore.dispatch(new BooksActions.GetBooks());
+    this.booksService.getBooks();
   }
 }

@@ -4,9 +4,10 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BookFilterPipe } from './book-filter.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ScrollTrackerDirective } from './scroll-tracker.directive';
 
 @NgModule({
-  declarations: [BookFilterPipe],
+  declarations: [BookFilterPipe, ScrollTrackerDirective],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -22,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BookFilterPipe,
     FormsModule,
     ReactiveFormsModule,
+    ScrollTrackerDirective,
   ],
 })
 export class ShareModule {}

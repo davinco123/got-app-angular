@@ -1,0 +1,9 @@
+<ngb-accordion [closeOthers]="true" scrollTracker (scrollingFinished)="onScrollingFinished()">
+    <ng-container *ngFor="let house of houseList , let i = index">
+        <ngb-panel title="{{i+1}}. {{house.name}}">
+            <ng-template ngbPanelContent>
+
+            </ng-template>
+        </ngb-panel>
+    </ng-container>
+</ngb-accordion>

@@ -1,31 +1,23 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import * as fromApp from '../../../../store/app.reducer';
 import { Character } from '../../models/characters.model';
+import { CharactersService } from '../../services/characters.service';
 
 @Component({
   selector: 'app-characters-list',
   templateUrl: './characters-list.component.html',
   styleUrls: ['./characters-list.component.scss'],
 })
-export class CharactersListComponent implements OnInit, OnDestroy {
+export class CharactersListComponent {
   public searchText = '';
-  public characterList: Character[];
-  private storeSubscription: Subscription;
+  public characterList$: Observable<Character[]>;
 
-  constructor(private charactersStore: Store<fromApp.AppState>) {}
-
-  ngOnInit(): void {
-    this.storeSubscription = this.charactersStore
-      .select('characters')
-      .subscribe((characterData) => {
-        this.characterList = characterData.characters;
-      });
+  constructor(private charactersService: CharactersService) {
+    this.characterList$ = charactersService.charactersList$;
   }
 
-  ngOnDestroy(): void {
-    this.storeSubscription.unsubscribe();
+  onScrollingFinished() {
+    this.charactersService.loadMore();
   }
 }

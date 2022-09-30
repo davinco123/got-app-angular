@@ -4,7 +4,7 @@
 </div>
 
 <ngb-accordion [closeOthers]="true">
-    <ng-container *ngFor="let book of bookList | bookFilter: searchText, let i = index">
+    <ng-container *ngFor="let book of bookList$| async | bookFilter: searchText, let i = index">
         <ngb-panel
             title="Volume {{i + 1}}, {{book.name}} by {{book.authors}} released in {{book.released | date: 'MMMM, d , Y'}}">
             <ng-template ngbPanelContent>

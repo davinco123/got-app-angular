@@ -3,22 +3,5 @@
         placeholder="Enter text to search" autofocus>
 </div>
 
-<ngb-accordion [closeOthers]="true">
-    <ng-container *ngFor="let character of characterList , let i = index">
-        <ngb-panel title="{{i + 1}}. {{character.name || character.aliases}}">
-            <ng-template ngbPanelContent>
-                <p> Name: <b>{{character.name}}</b></p>
-                <p> Gender: {{character.gender}}</p>
-                <p> Culture: {{character.culture}}</p>
-                <p> Borned in: {{character.born}}</p>
-                <p> Died in: {{character.died}}</p>
-                <p> Titles: {{character.title}}</p>
-                <p> Aliases: {{character.aliases}}</p>
-                <p> Father: {{character.father}}</p>
-                <p> Mother: {{character.mother}}</p>
-                <p> Spouse: {{character.spouse}}</p>
-                <p> Sworned Allegiances: {{character.allegiances}}</p>
-            </ng-template>
-        </ngb-panel>
-    </ng-container>
-</ngb-accordion>
+<app-characters-item [characterList]="characterList$ |async" (scrollingFinished)="onScrollingFinished()">
+</app-characters-item>
