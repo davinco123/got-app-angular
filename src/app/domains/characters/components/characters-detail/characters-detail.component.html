@@ -1,0 +1,13 @@
+<p> Name: <b>{{character.name}}</b></p>
+<p> Gender: {{character.gender}}</p>
+<p> Culture: {{character.culture}}</p>
+<p> Borned in: {{character.born}}</p>
+<p> Died in: {{character.died}}</p>
+<p> Titles: {{character.titles}}</p>
+<p> Aliases: {{character.aliases}}</p>
+<p> Father: {{character.father | urlToName | async}}</p>
+<p> Mother: {{character.mother | urlToName | async}}</p>
+<p> Spouse: <a [routerLink]="['../' + spouseId]">{{character.spouse |
+        urlToName |
+        async}}</a></p>
+<p> Sworned Allegiances: {{character.allegiances}}</p>

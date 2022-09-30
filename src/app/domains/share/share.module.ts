@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollTrackerDirective } from './scroll-tracker.directive';
 import { CharacterFilterPipe } from './character-filter.pipe';
 import { HousesFilterPipe } from './house-filter.pipe';
+import { UrlToNamePipe } from './url-to-name.pipe';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { HousesFilterPipe } from './house-filter.pipe';
     ScrollTrackerDirective,
     CharacterFilterPipe,
     HousesFilterPipe,
+    UrlToNamePipe,
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import { HousesFilterPipe } from './house-filter.pipe';
     ScrollTrackerDirective,
     CharacterFilterPipe,
     HousesFilterPipe,
+    UrlToNamePipe,
   ],
 })
 export class ShareModule {}

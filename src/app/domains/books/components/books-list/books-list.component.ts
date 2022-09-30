@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Book } from '../../models/books.model';
 import { Observable } from 'rxjs';
-import { BooksService } from '../../services/books.service';
+import { BooksService } from '../../service/books.service';
 
 @Component({
   selector: 'app-books-list',
@@ -12,7 +12,7 @@ export class BooksListComponent {
   public bookList$: Observable<Book[]>;
   public searchText = '';
 
-  constructor(private booksService: BooksService) {
+  constructor(booksService: BooksService) {
     this.bookList$ = booksService.booksList$;
   }
 }

@@ -1,19 +1,7 @@
-<ngb-accordion [closeOthers]="true" scrollTracker (scrollingFinished)="onScrollingFinished()" scrollTracker>
-    <ng-container *ngFor="let character of characterList | characterFilter: searchText , let i = index">
-        <ngb-panel title="{{i + 1}}. {{character.name || character.aliases}}">
-            <ng-template ngbPanelContent>
-                <p> Name: <b>{{character.name}}</b></p>
-                <p> Gender: {{character.gender}}</p>
-                <p> Culture: {{character.culture}}</p>
-                <p> Borned in: {{character.born}}</p>
-                <p> Died in: {{character.died}}</p>
-                <p> Titles: {{character.titles}}</p>
-                <p> Aliases: {{character.aliases}}</p>
-                <p> Father: {{character.father}}</p>
-                <p> Mother: {{character.mother}}</p>
-                <p> Spouse: {{character.spouse}}</p>
-                <p> Sworned Allegiances: {{character.allegiances}}</p>
-            </ng-template>
-        </ngb-panel>
-    </ng-container>
-</ngb-accordion>
+<div scrollTracker (scrollingFinished)="onScrollingFinished()" scrollTracker>
+    <ul class="list-group" *ngFor="let character of characterList | characterFilter: searchText , let i = index">
+        <a class="list-group-item" type="button" [routerLink]="[i+1]">
+            {{i + 1}}. {{character.name || character.aliases}}
+        </a>
+    </ul>
+</div>

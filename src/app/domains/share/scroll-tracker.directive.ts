@@ -4,12 +4,10 @@ import { Directive, Output, EventEmitter, HostListener } from '@angular/core';
   selector: '[scrollTracker]',
 })
 export class ScrollTrackerDirective {
-  @Output() scrollingFinished = new EventEmitter<void>();
-
-  emitted = false;
+  @Output() public scrollingFinished = new EventEmitter<void>();
+  private emitted = false;
 
   @HostListener('window:scroll', [])
-  @HostListener('window:search', [])
   onScroll(): void {
     if (
       window.innerHeight + window.scrollY >= document.body.offsetHeight &&
@@ -23,10 +21,5 @@ export class ScrollTrackerDirective {
     ) {
       this.emitted = false;
     }
-  }
-
-  onSearch(): void {
-    this.emitted = true;
-    this.scrollingFinished.emit();
   }
 }
