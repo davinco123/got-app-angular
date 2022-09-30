@@ -2,7 +2,14 @@
     <ng-container *ngFor="let house of houseList , let i = index">
         <ngb-panel title="{{i+1}}. {{house.name}}">
             <ng-template ngbPanelContent>
-
+                <p>Name: <b>{{house.name}}</b></p>
+                <p>Region: {{house.region}}</p>
+                <p>Coat of Arms: {{house.coatOfArms}}</p>
+                <p>Catchphrase: {{house.words}}</p>
+                <p>House Titles: {{house.titles}}</p>
+                <p>House Seat: {{house.seats}}</p>
+                <p>Ancenstral Weapons: {{house.ancestralWeapons}}</p>
+                <p>Cadet Branches: {{house.cadetBranches}}</p>
             </ng-template>
         </ngb-panel>
     </ng-container>

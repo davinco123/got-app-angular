@@ -1,18 +1,18 @@
-export class House {
-  public url: string;
-  public name: string;
-  public region: string;
-  public coatOfArms: string;
-  public words: string;
-  public titles: string[];
-  public seats: string[];
-  public currentLord: string;
-  public heir: string;
-  public overlord: string;
-  public founded: string;
-  public founder: string;
-  public diedOut: string;
-  public ancestralWeapons: string[];
-  public cadetBranches: string[];
-  public swornMembers: string[];
+export interface House {
+  url: string;
+  name: string;
+  region: string;
+  coatOfArms: string;
+  words: string;
+  titles: string[];
+  seats: string[];
+  currentLord: string;
+  heir: string;
+  overlord: string;
+  founded: string;
+  founder: string;
+  diedOut: string;
+  ancestralWeapons: string[];
+  cadetBranches: string[];
+  swornMembers: string[];
 }

@@ -1,6 +1,8 @@
 <div class="form-group search-bar">
-    <input class="form-control" id="search-text" aria-describedby="search-text" placeholder="Enter text to search"
-        autofocus>
+    <input type="search" class="form-control" id="search-text" aria-describedby="search-text"
+        placeholder="Enter text to search" autofocus [(ngModel)]="searchText">
 </div>
 
-<app-houses-item [houseList]="houseList$ | async" (scrollingFinished)="onScrollingFinished()"></app-houses-item>
+<app-houses-item [houseList]="houseList$ | async | houseFilter: searchText" (scrollingFinished)="onScrollingFinished()"
+    [searchText]="searchText">
+</app-houses-item>

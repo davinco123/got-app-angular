@@ -1,5 +1,5 @@
 <ngb-accordion [closeOthers]="true" scrollTracker (scrollingFinished)="onScrollingFinished()" scrollTracker>
-    <ng-container *ngFor="let character of characterList , let i = index">
+    <ng-container *ngFor="let character of characterList | characterFilter: searchText , let i = index">
         <ngb-panel title="{{i + 1}}. {{character.name || character.aliases}}">
             <ng-template ngbPanelContent>
                 <p> Name: <b>{{character.name}}</b></p>

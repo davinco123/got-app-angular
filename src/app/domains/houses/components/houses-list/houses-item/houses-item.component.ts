@@ -7,6 +7,7 @@ import { House } from '../../../models/houses.model';
   styleUrls: ['./houses-item.component.scss'],
 })
 export class HousesItemComponent {
+  @Input() public searchText = '';
   @Input() public houseList: House[] = [];
   @Output() public scrollingFinished = new EventEmitter<void>();
 

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { EffectsModule } from '@ngrx/effects';
 
 import { ShareModule } from '../share/share.module';
 import { CharactersItemComponent } from './components/characters-list/characters-item/characters-item.component';

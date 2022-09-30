@@ -9,6 +9,7 @@ export class ScrollTrackerDirective {
   emitted = false;
 
   @HostListener('window:scroll', [])
+  @HostListener('window:search', [])
   onScroll(): void {
     if (
       window.innerHeight + window.scrollY >= document.body.offsetHeight &&
@@ -22,5 +23,10 @@ export class ScrollTrackerDirective {
     ) {
       this.emitted = false;
     }
+  }
+
+  onSearch(): void {
+    this.emitted = true;
+    this.scrollingFinished.emit();
   }
 }

@@ -10,6 +10,7 @@ import { HousesService } from '../../services/houses.service';
   templateUrl: './houses-list.component.html',
 })
 export class HousesListComponent {
+  public searchText = '';
   public houseList$: Observable<House[]>;
 
   constructor(private housesService: HousesService) {

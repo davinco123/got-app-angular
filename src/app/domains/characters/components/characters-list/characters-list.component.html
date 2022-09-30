@@ -3,5 +3,6 @@
         placeholder="Enter text to search" autofocus>
 </div>
 
-<app-characters-item [characterList]="characterList$ |async" (scrollingFinished)="onScrollingFinished()">
+<app-characters-item [characterList]="characterList$ | async" (scrollingFinished)="onScrollingFinished()"
+    [searchText]="searchText">
 </app-characters-item>
