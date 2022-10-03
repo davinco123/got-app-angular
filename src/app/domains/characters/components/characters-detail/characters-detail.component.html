@@ -5,9 +5,22 @@
 <p> Died in: {{character.died}}</p>
 <p> Titles: {{character.titles}}</p>
 <p> Aliases: {{character.aliases}}</p>
-<p> Father: {{character.father | urlToName | async}}</p>
-<p> Mother: {{character.mother | urlToName | async}}</p>
-<p> Spouse: <a [routerLink]="['../' + spouseId]">{{character.spouse |
-        urlToName |
-        async}}</a></p>
-<p> Sworned Allegiances: {{character.allegiances}}</p>
+<p> Father: <a [routerLink]="['../' + father.id]"> {{father.name}}</a></p>
+<p> Mother: <a [routerLink]="['../' + mother.id]"> {{mother.name}}</a></p>
+<p> Spouse: <a [routerLink]="['../' + spouse.id]"> {{spouse.name}}</a></p>
+<p> Sworned Allegiances: -
+    <ng-container *ngFor="let allegiance of allegiances">
+        <a [routerLink]="['../../houses/' + allegiance.id]">{{allegiance.name}}</a> -
+    </ng-container>
+</p>
+<p> Appeared in: -
+    <ng-container *ngFor="let book of books">
+        <a [routerLink]="['../../books/' + book.id]">{{book.name}}</a> -
+    </ng-container>
+</p>
+<p> Appeared as the pov character in: -
+    <ng-container *ngFor="let povBook of povBooks">
+        <a [routerLink]="['../../books/' + povBook.id]">{{povBook.name}}</a> -
+    </ng-container>
+</p>
+<p> Played by: {{character.playedBy}}</p>

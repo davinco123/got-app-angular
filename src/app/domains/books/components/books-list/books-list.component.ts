@@ -10,7 +10,6 @@ import { BooksService } from '../../service/books.service';
 })
 export class BooksListComponent {
   public bookList$: Observable<Book[]>;
-  public searchText = '';
 
   constructor(booksService: BooksService) {
     this.bookList$ = booksService.booksList$;

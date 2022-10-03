@@ -6,11 +6,10 @@ import { Character } from '../../../models/characters.model';
   templateUrl: './characters-item.component.html',
 })
 export class CharactersItemComponent {
-  @Input() public searchText = '';
   @Input() public characterList: Character[];
   @Output() public scrollingFinished = new EventEmitter<void>();
 
-  onScrollingFinished(): void {
+  public onScrollingFinished(): void {
     this.scrollingFinished.emit();
   }
 }

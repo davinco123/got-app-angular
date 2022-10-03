@@ -16,6 +16,6 @@ export class CharacterResolver implements Resolve<Character> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Character | Observable<Character> | Promise<Character> {
-    return this.charactersService.getCharacter(+route.params['id']);
+    return this.charactersService.getCharacter(route.params['id']);
   }
 }

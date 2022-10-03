@@ -1,7 +1,7 @@
 <div scrollTracker (scrollingFinished)="onScrollingFinished()" scrollTracker>
-    <ul class="list-group" *ngFor="let character of characterList | characterFilter: searchText , let i = index">
-        <a class="list-group-item" type="button" [routerLink]="[i+1]">
-            {{i + 1}}. {{character.name || character.aliases}}
+    <ul class="list-group" *ngFor="let character of characterList">
+        <a class="list-group-item" type="button" [routerLink]="[character.url]">
+            {{character.name || character.aliases}}
         </a>
     </ul>
 </div>

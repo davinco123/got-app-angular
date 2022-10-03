@@ -10,14 +10,13 @@ import { CharactersService } from '../../services/characters.service';
   styleUrls: ['./characters-list.component.scss'],
 })
 export class CharactersListComponent {
-  public searchText = '';
   public characterList$: Observable<Character[]>;
 
-  constructor(private charactersService: CharactersService) {
+  public constructor(private charactersService: CharactersService) {
     this.characterList$ = charactersService.charactersList$;
   }
 
-  onScrollingFinished() {
+  public onScrollingFinished() {
     this.charactersService.loadMore();
   }
 }

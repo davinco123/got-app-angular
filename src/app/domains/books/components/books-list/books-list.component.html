@@ -1,23 +1,6 @@
 <div class="form-group search-bar">
-    <input class="form-control" id="search-text" aria-describedby="search-text" [(ngModel)]="searchText"
-        placeholder="Enter text to search" autofocus>
+    <input class="form-control" id="search-text" aria-describedby="search-text" placeholder="Enter text to search"
+        autofocus>
 </div>
 
-<ngb-accordion [closeOthers]="true">
-    <ng-container *ngFor="let book of bookList$| async | bookFilter: searchText, let i = index">
-        <ngb-panel
-            title="Volume {{i + 1}}, {{book.name}} by {{book.authors}} released in {{book.released | date: 'MMMM, d , Y'}}">
-            <ng-template ngbPanelContent>
-                <p> Volume: {{i + 1}} - <b>{{book.name}}</b></p>
-                <p> Authors: {{book.authors}}</p>
-                <p> Number of Pages: {{book.numberOfPages}}</p>
-                <p> isbn: {{book.isbn}}</p>
-                <p> Publisher: {{book.publisher}}</p>
-                <p> Country of origin: {{book.country}}</p>
-                <p> Released Date: {{book.released| date: 'MMMM, d , Y'}}</p>
-                <p> MediaType: {{book.mediaType}}</p>
-                <p> Characters: {{book.characters}}</p>
-            </ng-template>
-        </ngb-panel>
-    </ng-container>
-</ngb-accordion>
+<app-books-item [bookList]="bookList$ | async"></app-books-item>
