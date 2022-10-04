@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { isArray, isEmpty } from 'lodash';
 import { BehaviorSubject, Observable, map, switchMap, forkJoin } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
 import { Character } from '../../characters/models/characters.model';
 import { Book } from '../models/books.model';
@@ -9,44 +11,43 @@ import { Book } from '../models/books.model';
 export class BooksService {
   private booksSubject = new BehaviorSubject<Book[]>([]);
   public booksList: Book[] = [];
-  public saveList: Book[] = [];
-  public booksList$ = this.booksSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.getBooks();
+  constructor(private http: HttpClient) {}
+
+  public get booksList$(): Observable<Book[]> {
+    return this.booksSubject.asObservable();
   }
 
   public getBook(id: string): Observable<Book> {
     return this.http.get<Book>(`${environment.gotAPI}/books/${id}`).pipe(
-      switchMap((bookData) => {
-        const array: any[] = [];
-        if (bookData.characters.length > 0) array.push(bookData.characters);
-        if (bookData.povCharacters.length > 0)
-          array.push(bookData.povCharacters);
+      switchMap((bData) => {
+        const keyArrays = ['characters', 'povCharacters'];
 
-        return forkJoin([...array.flat(2).map((v) => this.getName(v))]).pipe(
-          map((resData) => {
-            if (bookData.characters.length > 0) {
-              bookData.characters = resData.slice(
-                0,
-                bookData.characters.length
+        const data = {};
+
+        for (const [key, value] of Object.entries(bData)) {
+          if (keyArrays.includes(key) && !isEmpty(value)) {
+            data[key] = value;
+          }
+        }
+
+        return forkJoin(
+          Object.keys(data).map((k) => {
+            if (isArray(data[k])) {
+              return forkJoin(data[k].map((v: string) => this.getName(v))).pipe(
+                map((res: string[]) => {
+                  bData[k] = res;
+                })
               );
-              resData = resData.slice(
-                bookData.characters.length,
-                resData.length
+            } else {
+              return forkJoin([this.getName(data[k])]).pipe(
+                map((res) => (bData[k] = res[0]))
               );
             }
-            if (bookData.povCharacters.length > 0) {
-              bookData.povCharacters = resData.slice(
-                0,
-                bookData.povCharacters.length
-              );
-              resData = resData.slice(
-                bookData.povCharacters.length,
-                resData.length
-              );
-            }
-            return bookData;
+          })
+        ).pipe(
+          map(() => {
+            return bData;
           })
         );
       })
@@ -61,25 +62,20 @@ export class BooksService {
         },
       })
       .pipe(
-        map((booksData) => {
-          booksData.map((book) => (book.url = book.url.replace(/\D/g, '')));
-          return booksData;
+        map((b) => {
+          b.map((book) => (book.url = book.url.replace(/\D/g, '')));
+          return b;
         })
       )
       .subscribe((data) => {
         if (!name) {
           this.booksSubject.next(
-            (this.booksList = [...this.saveList, ...data])
+            (this.booksList = [...this.booksList, ...data])
           );
-          this.saveList = this.booksList;
         } else {
           this.booksSubject.next((this.booksList = data));
         }
       });
-  }
-
-  public getSave(): void {
-    this.booksSubject.next((this.booksList = this.saveList));
   }
 
   private getName(url: string): Observable<string> {

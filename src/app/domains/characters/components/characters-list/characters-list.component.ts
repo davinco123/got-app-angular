@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
   Observable,
@@ -25,11 +25,10 @@ export class CharactersListComponent {
     this.searchText.valueChanges
       .pipe(startWith(''), debounceTime(300), distinctUntilChanged())
       .subscribe((value: string) => {
-        if (value) {
-          charactersService.getCharacters(value);
-        } else {
-          charactersService.getSave();
+        if (!value) {
+          this.charactersService.charactersList = [];
         }
+        charactersService.getCharacters(value);
       });
   }
 

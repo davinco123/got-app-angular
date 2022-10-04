@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
   debounceTime,
@@ -25,11 +25,10 @@ export class HousesListComponent {
     this.searchText.valueChanges
       .pipe(startWith(''), debounceTime(300), distinctUntilChanged())
       .subscribe((value) => {
-        if (value) {
-          housesService.getHouses(value);
-        } else {
-          housesService.getSave();
+        if (!value) {
+          this.housesService.housesList = [];
         }
+        housesService.getHouses(value);
       });
   }
 

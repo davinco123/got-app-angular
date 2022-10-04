@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { isEmpty } from 'lodash';
+import { isArray, isEmpty } from 'lodash';
 import { BehaviorSubject, Observable, map, switchMap, forkJoin } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Character } from '../../characters/models/characters.model';
@@ -14,9 +14,7 @@ export class HousesService {
   public saveList: House[] = [];
   public housesListLength = 10000;
 
-  constructor(private http: HttpClient) {
-    this.getHouses();
-  }
+  constructor(private http: HttpClient) {}
 
   public get housesList$(): Observable<House[]> {
     return this.housesSubject.asObservable();
@@ -24,70 +22,39 @@ export class HousesService {
 
   public getHouse(id: string): Observable<House> {
     return this.http.get<House>(`${environment.gotAPI}/houses/${id}`).pipe(
-      switchMap((houseData) => {
-        const array: string[] = [];
+      switchMap((hData) => {
+        const keyArrays = [
+          'currentLord',
+          'heir',
+          'overlord',
+          'founder',
+          'cadetBranches',
+          'swornMembers',
+        ];
 
-        Object.keys(houseData).map((hKey: string) => {
-          const hValue = houseData[hKey];
+        const data = {};
 
-          if (!isEmpty(hValue)) {
-            switch (hKey) {
-              case 'currentLord':
-              case 'heir':
-              case 'overlord':
-              case 'founder':
-              case 'cadetBranches':
-              case 'swornMembers':
-                array.push(hValue);
-                break;
-              default:
-                return;
-            }
+        for (const [key, value] of Object.entries(hData)) {
+          if (keyArrays.includes(key) && !isEmpty(value)) {
+            data[key] = value;
           }
-        });
+        }
 
-        return forkJoin([...array.flat(2).map((v) => this.getName(v))]).pipe(
-          map((resData) => {
-            if (houseData.currentLord) {
-              houseData.currentLord = resData[0];
-              resData = resData.slice(1, resData.length);
-            }
-            if (houseData.heir) {
-              houseData.heir = resData[0];
-              resData = resData.slice(1, resData.length);
-            }
-            if (houseData.overlord) {
-              houseData.overlord = resData[0];
-              resData = resData.slice(1, resData.length);
-            }
-            if (houseData.founder) {
-              houseData.founder = resData[0];
-              resData = resData.slice(1, resData.length);
-            }
-            if (houseData.cadetBranches.length > 0) {
-              houseData.cadetBranches = resData.slice(
-                0,
-                houseData.cadetBranches.length
+        return forkJoin(
+          Object.keys(data).map((k) => {
+            if (isArray(data[k])) {
+              return forkJoin(data[k].map((v: string) => this.getName(v))).pipe(
+                map((res: string[]) => {
+                  hData[k] = res;
+                })
               );
-              resData = resData.slice(
-                houseData.cadetBranches.length,
-                resData.length
+            } else {
+              return forkJoin([this.getName(data[k])]).pipe(
+                map((res) => (hData[k] = res[0]))
               );
             }
-            if (houseData.swornMembers.length > 0) {
-              houseData.swornMembers = resData.slice(
-                0,
-                houseData.swornMembers.length
-              );
-              resData = resData.slice(
-                houseData.swornMembers.length,
-                resData.length
-              );
-            }
-
-            return houseData;
           })
-        );
+        ).pipe(map(() => hData));
       })
     );
   }
@@ -101,35 +68,30 @@ export class HousesService {
         },
       })
       .pipe(
-        map((housesData) => {
-          housesData.map((house) => {
+        map((hData) => {
+          hData.map((house) => {
             house.url = house.url.replace(/\D/g, '');
           });
-          return housesData;
+          return hData;
         })
       )
-      .subscribe((housesData) => {
+      .subscribe((hData) => {
         if (!name) {
           this.housesSubject.next(
-            (this.housesList = [...this.saveList, ...housesData])
+            (this.housesList = [...this.housesList, ...hData])
           );
-          this.saveList = this.housesList;
-          this.page++;
         } else {
-          this.housesSubject.next((this.housesList = housesData));
+          this.housesSubject.next((this.housesList = hData));
+          this.page = 1;
         }
       });
   }
 
   public loadMore(): void {
     if (this.housesList.length < this.housesListLength) {
+      this.page++;
       this.getHouses();
-      this.housesSubject.next(this.housesList);
     }
-  }
-
-  public getSave(): void {
-    this.housesSubject.next((this.housesList = this.saveList));
   }
 
   private getName(url: string): Observable<string> {

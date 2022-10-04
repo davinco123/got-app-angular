@@ -24,11 +24,10 @@ export class BooksListComponent {
     this.searchText.valueChanges
       .pipe(startWith(''), debounceTime(300), distinctUntilChanged())
       .subscribe((value: string) => {
-        if (value) {
-          booksService.getBooks(value);
-        } else {
-          booksService.getSave();
+        if (!value) {
+          booksService.booksList = [];
         }
+        booksService.getBooks(value);
       });
   }
 }
