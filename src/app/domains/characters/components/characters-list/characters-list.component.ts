@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import {
+  Observable,
+  debounceTime,
+  distinctUntilChanged,
+  startWith,
+} from 'rxjs';
 
 import { Character } from '../../models/characters.model';
 import { CharactersService } from '../../services/characters.service';
@@ -10,10 +16,21 @@ import { CharactersService } from '../../services/characters.service';
   styleUrls: ['./characters-list.component.scss'],
 })
 export class CharactersListComponent {
+  public searchText = new FormControl();
   public characterList$: Observable<Character[]>;
 
-  public constructor(private charactersService: CharactersService) {
+  constructor(private charactersService: CharactersService) {
     this.characterList$ = charactersService.charactersList$;
+
+    this.searchText.valueChanges
+      .pipe(startWith(''), debounceTime(300), distinctUntilChanged())
+      .subscribe((value: string) => {
+        if (value) {
+          charactersService.getCharacters(value);
+        } else {
+          charactersService.getSave();
+        }
+      });
   }
 
   public onScrollingFinished() {

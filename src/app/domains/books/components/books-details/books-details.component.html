@@ -8,11 +8,11 @@
 <p> MediaType: {{book.mediaType}}</p>
 <p> Pov Characters: -
     <ng-container *ngFor="let povCharacter of povCharacters">
-        <a [routerLink]="['../../characters/' + povCharacter.id]">{{povCharacter.name}}</a> -
+        <a [routerLink]="['/characters/', povCharacter.id]">{{povCharacter.name}}</a> -
     </ng-container>
 </p>
 <p> Characters: -
     <ng-container *ngFor="let character of characters">
-        <a [routerLink]="['../../characters/' + character.id]">{{character.name}}</a> -
+        <a [routerLink]="['/characters/',  character.id]">{{character.name}}</a> -
     </ng-container>
 </p>

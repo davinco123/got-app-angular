@@ -1,6 +1,6 @@
 <div class="form-group search-bar">
-    <input class="form-control" id="search-text" aria-describedby="search-text" placeholder="Enter text to search"
-        autofocus>
+    <input [formControl]="searchText" class="form-control" id="search-text" aria-describedby="search-text"
+        placeholder="Enter text to search" autofocus>
 </div>
 
 <app-books-item [bookList]="bookList$ | async"></app-books-item>

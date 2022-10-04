@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  Observable,
+  startWith,
+} from 'rxjs';
 
 import { House } from '../../models/houses.model';
 import { HousesService } from '../../services/houses.service';
@@ -11,9 +17,20 @@ import { HousesService } from '../../services/houses.service';
 })
 export class HousesListComponent {
   public houseList$: Observable<House[]>;
+  public searchText = new FormControl();
 
   constructor(private housesService: HousesService) {
     this.houseList$ = housesService.housesList$;
+
+    this.searchText.valueChanges
+      .pipe(startWith(''), debounceTime(300), distinctUntilChanged())
+      .subscribe((value) => {
+        if (value) {
+          housesService.getHouses(value);
+        } else {
+          housesService.getSave();
+        }
+      });
   }
 
   onScrollingFinished() {
