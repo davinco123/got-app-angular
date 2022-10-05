@@ -1,18 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-light ng-light">
     <div class="container-fluid">
         <a class="navbar-brand">A Song of Ice and Fire</a>
-        <div class="navbar-collapse" id="navbarText">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
+            aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" [routerLink]="['/books']" routerLinkActive="active"
+                    <a class="nav-link" aria-current="page" [routerLink]="['/books']" routerLinkActive="active"
                         [routerLinkActiveOptions]="{exact: true}">Books</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" [routerLink]="['/characters']"
+                    <a class="nav-link" aria-current="page" [routerLink]="['/characters']"
                         routerLinkActive="active">Characters</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" [routerLink]="['/houses']"
+                    <a class="nav-link" aria-current="page" [routerLink]="['/houses']"
                         routerLinkActive="active">Houses</a>
                 </li>
             </ul>
