@@ -13,6 +13,7 @@ import { BooksService } from '../../service/books.service';
 export class BooksDetailsComponent implements OnInit {
   public book: Book;
   public id = '';
+  public show = false;
   public povCharacters: NameAndId[];
   public characters: NameAndId[];
 
@@ -39,6 +40,10 @@ export class BooksDetailsComponent implements OnInit {
         });
       });
     });
+  }
+
+  public showmore(): void {
+    this.show = !this.show;
   }
 
   private createNameAndId(value: string): NameAndId {

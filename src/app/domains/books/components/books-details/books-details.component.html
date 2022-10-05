@@ -13,9 +13,9 @@
             <a [routerLink]="['/characters/', povCharacter.id]">{{povCharacter.name}}</a> -
         </ng-container>
     </p>
-    <p> Characters: -
+    <p class="showless" [class.showmore]="show"> Characters: -
         <ng-container *ngFor="let character of characters">
             <a [routerLink]="['/characters/',  character.id]">{{character.name}}</a> -
         </ng-container>
-    </p>
+    </p><a class="btn btn-sm" (click)="showmore()">{{show ? 'Show Less' : 'Show More'}}</a>
 </ng-container>
