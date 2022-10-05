@@ -1,3 +1,4 @@
+<ngx-skeleton-loader *ngIf="!book" count="20" appearance="line"></ngx-skeleton-loader>
 <ng-container *ngIf='book'>
     <p> Title: <b>{{book.name}}</b></p>
     <p> Authors: {{book.authors}}</p>

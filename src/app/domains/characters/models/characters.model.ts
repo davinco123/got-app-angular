@@ -1,3 +1,5 @@
+import { NameAndId } from '../../share/models/share.model';
+
 export interface Character {
   url: string;
   name: string;
@@ -24,9 +26,4 @@ export interface updateCharacter {
   allegiances: NameAndId[];
   books: NameAndId[];
   povBooks: NameAndId[];
-}
-
-export interface NameAndId {
-  id: string;
-  name: string;
 }

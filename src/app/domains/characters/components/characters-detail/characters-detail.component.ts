@@ -1,6 +1,5 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { Character, updateCharacter } from '../../models/characters.model';
 import { CharactersService } from '../../services/characters.service';
 
@@ -9,22 +8,24 @@ import { CharactersService } from '../../services/characters.service';
   templateUrl: './characters-detail.component.html',
   styleUrls: ['./characters-detail.component.scss'],
 })
-export class CharactersDetailComponent implements OnDestroy {
+export class CharactersDetailComponent implements OnInit {
   public character: Character;
   public id = '';
   public updateCharacterInfo: updateCharacter;
-  private routeSub: Subscription;
 
   constructor(
-    public route: ActivatedRoute,
-    charactersService: CharactersService
-  ) {
-    this.routeSub = route.paramMap.subscribe((params) => {
+    private route: ActivatedRoute,
+    private router: Router,
+    private charactersService: CharactersService
+  ) {}
+
+  public ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
       if (params.get('id') !== this.id) {
         this.id = params.get('id');
       }
 
-      charactersService.getCharacter(this.id).subscribe((cData) => {
+      this.charactersService.getCharacter(this.id).subscribe((cData) => {
         this.character = cData;
         const keyArrays = [
           'father',
@@ -49,10 +50,12 @@ export class CharactersDetailComponent implements OnDestroy {
         this.updateCharacterInfo = data;
       });
     });
-  }
 
-  public ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
+    this.router.events.forEach((event) => {
+      if (event instanceof NavigationStart) {
+        this.character = null;
+      }
+    });
   }
 
   private createNameAndId(value: string) {

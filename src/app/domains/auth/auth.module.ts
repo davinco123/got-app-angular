@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthPageGuard } from '../share/auth.guard';
 
+import { AuthPageGuard } from '../share/guards/auth.guard';
 import { ShareModule } from '../share/share.module';
 import { AuthLoginComponent } from './components/auth-login/auth-login.component';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';

@@ -1,7 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { NameAndId } from 'src/app/domains/characters/models/characters.model';
+
+import { NameAndId } from 'src/app/domains/share/models/share.model';
 import { Book } from '../../models/books.model';
 import { BooksService } from '../../service/books.service';
 
@@ -10,20 +10,24 @@ import { BooksService } from '../../service/books.service';
   templateUrl: './books-details.component.html',
   styleUrls: ['./books-details.component.scss'],
 })
-export class BooksDetailsComponent implements OnDestroy {
+export class BooksDetailsComponent implements OnInit {
   public book: Book;
   public id = '';
   public povCharacters: NameAndId[];
   public characters: NameAndId[];
-  private routeSub: Subscription;
 
-  constructor(route: ActivatedRoute, booksService: BooksService) {
-    this.routeSub = route.paramMap.subscribe((params) => {
+  constructor(
+    private route: ActivatedRoute,
+    private booksService: BooksService
+  ) {}
+
+  public ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
       if (params.get('id') !== this.id) {
         this.id = params.get('id');
       }
 
-      booksService.getBook(this.id).subscribe((bData) => {
+      this.booksService.getBook(this.id).subscribe((bData) => {
         this.book = bData;
 
         this.povCharacters = this.book.povCharacters.map((v) => {
@@ -35,10 +39,6 @@ export class BooksDetailsComponent implements OnDestroy {
         });
       });
     });
-  }
-
-  public ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
   }
 
   private createNameAndId(value: string): NameAndId {

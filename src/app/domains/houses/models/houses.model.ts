@@ -1,4 +1,4 @@
-import { NameAndId } from '../../characters/models/characters.model';
+import { NameAndId } from '../../share/models/share.model';
 
 export interface House {
   url: string;

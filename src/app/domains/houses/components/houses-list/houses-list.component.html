@@ -5,3 +5,5 @@
 
 <app-houses-item [houseList]="houseList$ | async" (scrollingFinished)="onScrollingFinished()">
 </app-houses-item>
+
+<ngx-skeleton-loader *ngIf="isLoading" count="20" appearance="line"></ngx-skeleton-loader>

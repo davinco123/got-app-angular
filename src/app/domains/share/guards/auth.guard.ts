@@ -7,10 +7,10 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../auth/services/auth.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable({ providedIn: 'root' })
-export class ResourcesPageGuard implements CanActivate {
+export class AuthPageGuard implements CanActivate {
   constructor(private router: Router, private authService: AuthService) {}
 
   canActivate(
@@ -21,8 +21,8 @@ export class ResourcesPageGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    return !!JSON.parse(localStorage.getItem('userData'))
+    return !JSON.parse(localStorage.getItem('userData'))
       ? true
-      : this.router.createUrlTree(['/auth/']);
+      : this.router.createUrlTree(['']);
   }
 }

@@ -1,3 +1,5 @@
+<ngx-skeleton-loader *ngIf="!character" count="20" appearance="line"></ngx-skeleton-loader>
+
 <ng-container *ngIf="character">
     <p> Name: <b>{{character.name}}</b></p>
     <p> Gender: {{character.gender}}</p>

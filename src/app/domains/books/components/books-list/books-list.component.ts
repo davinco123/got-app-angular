@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Book } from '../../models/books.model';
 import {
   debounceTime,
@@ -14,20 +14,24 @@ import { FormControl } from '@angular/forms';
   templateUrl: './books-list.component.html',
   styleUrls: ['./books-list.component.scss'],
 })
-export class BooksListComponent {
+export class BooksListComponent implements OnInit {
   public bookList$: Observable<Book[]>;
+  public isLoading = true;
   public searchText = new FormControl();
 
-  constructor(booksService: BooksService) {
-    this.bookList$ = booksService.booksList$;
+  constructor(private booksService: BooksService) {}
+
+  public ngOnInit(): void {
+    this.bookList$ = this.booksService.booksList$;
 
     this.searchText.valueChanges
       .pipe(startWith(''), debounceTime(300), distinctUntilChanged())
       .subscribe((value: string) => {
         if (!value) {
-          booksService.booksList = [];
+          this.booksService.booksList = [];
         }
-        booksService.getBooks(value);
+        this.booksService.getBooks(value);
+        this.isLoading = false;
       });
   }
 }

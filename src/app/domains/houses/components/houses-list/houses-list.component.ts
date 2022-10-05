@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
   debounceTime,
@@ -15,12 +15,15 @@ import { HousesService } from '../../services/houses.service';
   styleUrls: ['./houses-list.component.scss'],
   templateUrl: './houses-list.component.html',
 })
-export class HousesListComponent {
+export class HousesListComponent implements OnInit {
   public houseList$: Observable<House[]>;
+  public isLoading = true;
   public searchText = new FormControl();
 
-  constructor(private housesService: HousesService) {
-    this.houseList$ = housesService.housesList$;
+  constructor(private housesService: HousesService) {}
+
+  public ngOnInit(): void {
+    this.houseList$ = this.housesService.housesList$;
 
     this.searchText.valueChanges
       .pipe(startWith(''), debounceTime(300), distinctUntilChanged())
@@ -28,11 +31,12 @@ export class HousesListComponent {
         if (!value) {
           this.housesService.housesList = [];
         }
-        housesService.getHouses(value);
+        this.housesService.getHouses(value);
+        this.isLoading = false;
       });
   }
 
-  onScrollingFinished() {
+  public onScrollingFinished() {
     this.housesService.loadMore();
   }
 }

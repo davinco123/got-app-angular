@@ -8,6 +8,7 @@ import {
   switchMap,
   forkJoin,
   tap,
+  of,
 } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Character } from '../../characters/models/characters.model';
@@ -47,21 +48,27 @@ export class HousesService {
           }
         }
 
-        return forkJoin(
-          Object.keys(data).map((k) => {
-            if (isArray(data[k])) {
-              return forkJoin(data[k].map((v: string) => this.getName(v))).pipe(
-                tap((res: string[]) => {
-                  hData[k] = res;
-                })
-              );
-            } else {
-              return forkJoin([this.getName(data[k])]).pipe(
-                tap((res) => (hData[k] = res[0]))
-              );
-            }
-          })
-        ).pipe(map(() => hData));
+        if (!isEmpty(data)) {
+          return forkJoin(
+            Object.keys(data).map((k) => {
+              if (isArray(data[k])) {
+                return forkJoin(
+                  data[k].map((v: string) => this.getName(v))
+                ).pipe(
+                  tap((res: string[]) => {
+                    hData[k] = res;
+                  })
+                );
+              } else {
+                return forkJoin([this.getName(data[k])]).pipe(
+                  tap((res) => (hData[k] = res[0]))
+                );
+              }
+            })
+          ).pipe(map(() => hData));
+        } else {
+          return of(hData);
+        }
       })
     );
   }

@@ -2,5 +2,8 @@
     <input [formControl]="searchText" type="search" class="form-control" id="search-text" aria-describedby="search-text"
         placeholder="Enter text to search" autofocus>
 </div>
+
 <app-characters-item [characterList]="characterList$ | async" (scrollingFinished)="onScrollingFinished()">
 </app-characters-item>
+
+<ngx-skeleton-loader *ngIf="isLoading" count="20" appearance="line"></ngx-skeleton-loader>

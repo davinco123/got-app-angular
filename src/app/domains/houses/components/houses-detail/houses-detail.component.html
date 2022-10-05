@@ -1,3 +1,5 @@
+<ngx-skeleton-loader *ngIf="!house" count="20" appearance="line"></ngx-skeleton-loader>
+
 <ng-container *ngIf="house">
     <p>Name: <b>{{house.name}}</b></p>
     <p>Region: {{house.region}}</p>

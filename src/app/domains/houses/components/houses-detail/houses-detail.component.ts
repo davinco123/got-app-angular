@@ -1,8 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { isArray } from 'lodash';
-import { Subscription } from 'rxjs';
-import { NameAndId } from 'src/app/domains/characters/models/characters.model';
+
+import { NameAndId } from 'src/app/domains/share/models/share.model';
 import { House, updateHouse } from '../../models/houses.model';
 import { HousesService } from '../../services/houses.service';
 
@@ -11,19 +11,24 @@ import { HousesService } from '../../services/houses.service';
   templateUrl: './houses-detail.component.html',
   styleUrls: ['./houses-detail.component.scss'],
 })
-export class HousesDetailComponent implements OnDestroy {
+export class HousesDetailComponent implements OnInit {
   public house: House;
   public id = '';
   public updateHouseInfo: updateHouse;
-  private routeSub: Subscription;
 
-  constructor(route: ActivatedRoute, housesService: HousesService) {
-    this.routeSub = route.paramMap.subscribe((params) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private housesService: HousesService
+  ) {}
+
+  public ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
       if (params.get('id') !== this.id) {
         this.id = params.get('id');
       }
 
-      housesService.getHouse(this.id).subscribe((hData) => {
+      this.housesService.getHouse(this.id).subscribe((hData) => {
         this.house = hData;
         const keyArray = [
           'currentLord',
@@ -49,10 +54,12 @@ export class HousesDetailComponent implements OnDestroy {
         this.updateHouseInfo = data;
       });
     });
-  }
 
-  public ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
+    this.router.events.forEach((event) => {
+      if (event instanceof NavigationStart) {
+        this.house = null;
+      }
+    });
   }
 
   private createNameAndId(value: string): NameAndId {

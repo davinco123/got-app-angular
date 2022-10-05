@@ -10,7 +10,7 @@ export class HousesItemComponent {
   @Input() public houseList: House[] = [];
   @Output() public scrollingFinished = new EventEmitter<void>();
 
-  onScrollingFinished() {
+  public onScrollingFinished() {
     this.scrollingFinished.emit();
   }
 }
