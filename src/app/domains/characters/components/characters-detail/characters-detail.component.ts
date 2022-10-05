@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { isArray } from 'lodash';
 import { Character, updateCharacter } from '../../models/characters.model';
 
 @Component({
@@ -28,7 +27,7 @@ export class CharactersDetailComponent {
 
       for (const [key, value] of Object.entries(this.character)) {
         if (keyArrays.includes(key)) {
-          if (!isArray(value)) {
+          if (!Array.isArray(value)) {
             data[key] = this.createNameAndId(value);
           } else {
             data[key] = value.map((v) => this.createNameAndId(v));

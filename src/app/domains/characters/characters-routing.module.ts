@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { never } from 'rxjs';
+import { AuthPageGuard } from '../share/auth.guard';
+import { ResourcesPageGuard } from '../share/resources.guard';
 
 import { CharactersDetailComponent } from './components/characters-detail/characters-detail.component';
 import { CharactersListComponent } from './components/characters-list/characters-list.component';
@@ -11,6 +12,7 @@ const routes: Routes = [
   {
     path: '',
     component: CharactersPageComponent,
+    canActivate: [ResourcesPageGuard],
     children: [
       {
         path: '',
