@@ -5,7 +5,6 @@ import { ResourcesPageGuard } from '../share/resources.guard';
 import { BooksDetailsComponent } from './components/books-details/books-details.component';
 import { BooksListComponent } from './components/books-list/books-list.component';
 import { BooksPageComponent } from './pages/book-pages/books-page.component';
-import { BookResolver } from './service/book-resolver.service';
 
 const routes: Routes = [
   {
@@ -20,7 +19,6 @@ const routes: Routes = [
       {
         path: ':id',
         component: BooksDetailsComponent,
-        resolve: { book: BookResolver },
       },
     ],
   },

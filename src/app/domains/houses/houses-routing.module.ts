@@ -4,7 +4,6 @@ import { ResourcesPageGuard } from '../share/resources.guard';
 import { HousesDetailComponent } from './components/houses-detail/houses-detail.component';
 import { HousesListComponent } from './components/houses-list/houses-list.component';
 import { HousesPageComponent } from './pages/houses-page/houses-page.component';
-import { HouseResolver } from './services/house-resolver.service';
 
 const routes: Routes = [
   {
@@ -19,7 +18,6 @@ const routes: Routes = [
       {
         path: ':id',
         component: HousesDetailComponent,
-        resolve: { house: HouseResolver },
       },
     ],
   },

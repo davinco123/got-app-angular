@@ -1,30 +1,35 @@
-<p> Name: <b>{{character.name}}</b></p>
-<p> Gender: {{character.gender}}</p>
-<p> Culture: {{character.culture}}</p>
-<p> Borned in: {{character.born}}</p>
-<p> Died in: {{character.died}}</p>
-<p> Titles: {{character.titles}}</p>
-<p> Aliases: {{character.aliases}}</p>
-<p> Father: <a [routerLink]="['/characters/', updateCharacterInfo.father.id]"> {{updateCharacterInfo.father.name}}</a>
-</p>
-<p> Mother: <a [routerLink]="['/characters/', updateCharacterInfo.mother.id]"> {{updateCharacterInfo.mother.name}}</a>
-</p>
-<p> Spouse: <a [routerLink]="['/characters/', updateCharacterInfo.spouse.id]"> {{updateCharacterInfo.spouse.name}}</a>
-</p>
-<p> Sworned Allegiances: -
-    <ng-container *ngFor="let allegiance of updateCharacterInfo.allegiances">
-        <a [routerLink]="['/houses/', allegiance.id]">{{allegiance.name}}</a> -
-    </ng-container>
-</p>
-<p> Appeared in: -
-    <ng-container *ngFor="let book of updateCharacterInfo.books">
-        <a [routerLink]="['/books/', book.id]">{{book.name}}</a> -
-    </ng-container>
-</p>
-<p> Appeared as the pov character in: -
-    <ng-container *ngFor="let povBook of updateCharacterInfo.povBooks">
-        <a [routerLink]="['/books/', povBook.id]">{{povBook.name}}</a> -
-    </ng-container>
-</p>
-<p> Television series: {{character.tvSeries}} </p>
-<p> Played by: {{character.playedBy}}</p>
+<ng-container *ngIf="character">
+    <p> Name: <b>{{character.name}}</b></p>
+    <p> Gender: {{character.gender}}</p>
+    <p> Culture: {{character.culture}}</p>
+    <p> Borned in: {{character.born}}</p>
+    <p> Died in: {{character.died}}</p>
+    <p> Titles: {{character.titles}}</p>
+    <p> Aliases: {{character.aliases}}</p>
+    <p> Father: <a [routerLink]="['/characters/', updateCharacterInfo.father.id]">
+            {{updateCharacterInfo.father.name}}</a>
+    </p>
+    <p> Mother: <a [routerLink]="['/characters/', updateCharacterInfo.mother.id]">
+            {{updateCharacterInfo.mother.name}}</a>
+    </p>
+    <p> Spouse: <a [routerLink]="['/characters/', updateCharacterInfo.spouse.id]">
+            {{updateCharacterInfo.spouse.name}}</a>
+    </p>
+    <p> Sworned Allegiances: -
+        <ng-container *ngFor="let allegiance of updateCharacterInfo.allegiances">
+            <a [routerLink]="['/houses/', allegiance.id]">{{allegiance.name}}</a> -
+        </ng-container>
+    </p>
+    <p> Appeared in: -
+        <ng-container *ngFor="let book of updateCharacterInfo.books">
+            <a [routerLink]="['/books/', book.id]">{{book.name}}</a> -
+        </ng-container>
+    </p>
+    <p> Appeared as the pov character in: -
+        <ng-container *ngFor="let povBook of updateCharacterInfo.povBooks">
+            <a [routerLink]="['/books/', povBook.id]">{{povBook.name}}</a> -
+        </ng-container>
+    </p>
+    <p> Television series: {{character.tvSeries}} </p>
+    <p> Played by: {{character.playedBy}}</p>
+</ng-container>

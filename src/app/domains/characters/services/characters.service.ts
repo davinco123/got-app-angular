@@ -8,6 +8,7 @@ import {
   switchMap,
   forkJoin,
   tap,
+  of,
 } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -19,7 +20,7 @@ export class CharactersService {
   private charactersSubject = new BehaviorSubject<Character[]>([]);
   public page = 1;
   public charactersList: Character[] = [];
-  public charactersListLength = 10000;
+  public totalCharacterList = 10000;
 
   constructor(private http: HttpClient) {}
 
@@ -49,23 +50,27 @@ export class CharactersService {
             }
           }
 
-          return forkJoin(
-            Object.keys(data).map((k) => {
-              if (isArray(data[k])) {
-                return forkJoin(
-                  data[k].map((v: string) => this.getName(v))
-                ).pipe(
-                  tap((res: string[]) => {
-                    cData[k] = res;
-                  })
-                );
-              } else {
-                return forkJoin([this.getName(data[k])]).pipe(
-                  tap((res) => (cData[k] = res[0]))
-                );
-              }
-            })
-          ).pipe(map(() => cData));
+          if (!isEmpty(data)) {
+            return forkJoin(
+              Object.keys(data).map((k) => {
+                if (isArray(data[k])) {
+                  return forkJoin(
+                    data[k].map((v: string) => this.getName(v))
+                  ).pipe(
+                    tap((res: string[]) => {
+                      cData[k] = res;
+                    })
+                  );
+                } else {
+                  return forkJoin([this.getName(data[k])]).pipe(
+                    tap((res) => (cData[k] = res[0]))
+                  );
+                }
+              })
+            ).pipe(map(() => cData));
+          } else {
+            return of(cData);
+          }
         })
       );
   }
@@ -98,7 +103,7 @@ export class CharactersService {
   }
 
   public loadMore(): void {
-    if (this.charactersList.length < this.charactersListLength) {
+    if (this.charactersList.length < this.totalCharacterList) {
       this.page++;
       this.getCharacters();
     }

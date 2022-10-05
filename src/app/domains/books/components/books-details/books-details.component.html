@@ -1,18 +1,20 @@
-<p> Title: <b>{{book.name}}</b></p>
-<p> Authors: {{book.authors}}</p>
-<p> Number of Pages: {{book.numberOfPages}}</p>
-<p> isbn: {{book.isbn}}</p>
-<p> Publisher: {{book.publisher}}</p>
-<p> Country of origin: {{book.country}}</p>
-<p> Released Date: {{book.released| date: 'MMMM, d , Y'}}</p>
-<p> MediaType: {{book.mediaType}}</p>
-<p> Pov Characters: -
-    <ng-container *ngFor="let povCharacter of povCharacters">
-        <a [routerLink]="['/characters/', povCharacter.id]">{{povCharacter.name}}</a> -
-    </ng-container>
-</p>
-<p> Characters: -
-    <ng-container *ngFor="let character of characters">
-        <a [routerLink]="['/characters/',  character.id]">{{character.name}}</a> -
-    </ng-container>
-</p>
+<ng-container *ngIf='book'>
+    <p> Title: <b>{{book.name}}</b></p>
+    <p> Authors: {{book.authors}}</p>
+    <p> Number of Pages: {{book.numberOfPages}}</p>
+    <p> isbn: {{book.isbn}}</p>
+    <p> Publisher: {{book.publisher}}</p>
+    <p> Country of origin: {{book.country}}</p>
+    <p> Released Date: {{book.released| date: 'MMMM, d , Y'}}</p>
+    <p> MediaType: {{book.mediaType}}</p>
+    <p> Pov Characters: -
+        <ng-container *ngFor="let povCharacter of povCharacters">
+            <a [routerLink]="['/characters/', povCharacter.id]">{{povCharacter.name}}</a> -
+        </ng-container>
+    </p>
+    <p> Characters: -
+        <ng-container *ngFor="let character of characters">
+            <a [routerLink]="['/characters/',  character.id]">{{character.name}}</a> -
+        </ng-container>
+    </p>
+</ng-container>

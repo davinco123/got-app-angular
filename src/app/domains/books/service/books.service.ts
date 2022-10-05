@@ -8,6 +8,7 @@ import {
   switchMap,
   forkJoin,
   tap,
+  of,
 } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -38,25 +39,27 @@ export class BooksService {
           }
         }
 
-        return forkJoin(
-          Object.keys(data).map((k) => {
-            if (isArray(data[k])) {
-              return forkJoin(data[k].map((v: string) => this.getName(v))).pipe(
-                tap((res: string[]) => {
-                  bData[k] = res;
-                })
-              );
-            } else {
-              return forkJoin([this.getName(data[k])]).pipe(
-                tap((res) => (bData[k] = res[0]))
-              );
-            }
-          })
-        ).pipe(
-          map(() => {
-            return bData;
-          })
-        );
+        if (!isEmpty(data)) {
+          return forkJoin(
+            Object.keys(data).map((k) => {
+              if (isArray(data[k])) {
+                return forkJoin(
+                  data[k].map((v: string) => this.getName(v))
+                ).pipe(
+                  tap((res: string[]) => {
+                    bData[k] = res;
+                  })
+                );
+              } else {
+                return forkJoin([this.getName(data[k])]).pipe(
+                  tap((res) => (bData[k] = res[0]))
+                );
+              }
+            })
+          ).pipe(map(() => bData));
+        } else {
+          return of(bData);
+        }
       })
     );
   }
