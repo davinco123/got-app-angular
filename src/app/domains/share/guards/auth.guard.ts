@@ -7,13 +7,12 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthPageGuard implements CanActivate {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router) {}
 
-  canActivate(
+  public canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ):

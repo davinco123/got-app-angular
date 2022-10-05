@@ -5,7 +5,6 @@ import {
   debounceTime,
   distinctUntilChanged,
   startWith,
-  tap,
 } from 'rxjs';
 
 import { Character } from '../../models/characters.model';

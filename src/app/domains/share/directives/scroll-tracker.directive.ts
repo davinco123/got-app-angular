@@ -8,7 +8,7 @@ export class ScrollTrackerDirective {
   private emitted = false;
 
   @HostListener('window:scroll', [])
-  onScroll(): void {
+  public onScroll(): void {
     if (
       window.innerHeight + window.scrollY >= document.body.offsetHeight &&
       !this.emitted
