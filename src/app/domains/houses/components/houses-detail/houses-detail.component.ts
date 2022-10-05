@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { isArray } from 'lodash';
 import { NameAndId } from 'src/app/domains/characters/models/characters.model';
-import { House } from '../../models/houses.model';
+import { House, updateHouse } from '../../models/houses.model';
 
 @Component({
   selector: 'app-houses-detail',
@@ -10,28 +11,34 @@ import { House } from '../../models/houses.model';
 })
 export class HousesDetailComponent {
   public house: House;
-  public currentLord: NameAndId;
-  public overlord: NameAndId;
-  public heir: NameAndId;
-  public founder: NameAndId;
-  public cadetBranches: NameAndId[];
-  public swornMembers: NameAndId[];
+  public updateHouseInfo: updateHouse;
 
   constructor(route: ActivatedRoute) {
     route.data.subscribe(() => {
       this.house = route.snapshot.data.house;
 
-      this.currentLord = this.createNameAndId(this.house.currentLord);
-      this.overlord = this.createNameAndId(this.house.overlord);
-      this.heir = this.createNameAndId(this.house.heir);
-      this.founder = this.createNameAndId(this.house.founder);
-      this.cadetBranches = this.house.cadetBranches.map((v) => {
-        return this.createNameAndId(v);
-      });
+      const keyArray = [
+        'currentLord',
+        'heir',
+        'overlord',
+        'founder',
+        'cadetBranches',
+        'swornMembers',
+      ];
 
-      this.swornMembers = this.house.swornMembers.map((v) => {
-        return this.createNameAndId(v);
-      });
+      const data: any = {};
+
+      for (const [key, value] of Object.entries(this.house)) {
+        if (keyArray.includes(key)) {
+          if (!isArray(value)) {
+            data[key] = this.createNameAndId(value);
+          } else {
+            data[key] = value.map((v: string) => this.createNameAndId(v));
+          }
+        }
+      }
+
+      this.updateHouseInfo = data;
     });
   }
 

@@ -1,7 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { isArray, isEmpty } from 'lodash';
-import { BehaviorSubject, Observable, map, switchMap, forkJoin } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  map,
+  switchMap,
+  forkJoin,
+  tap,
+} from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { Character } from '../../characters/models/characters.model';
@@ -35,13 +42,13 @@ export class BooksService {
           Object.keys(data).map((k) => {
             if (isArray(data[k])) {
               return forkJoin(data[k].map((v: string) => this.getName(v))).pipe(
-                map((res: string[]) => {
+                tap((res: string[]) => {
                   bData[k] = res;
                 })
               );
             } else {
               return forkJoin([this.getName(data[k])]).pipe(
-                map((res) => (bData[k] = res[0]))
+                tap((res) => (bData[k] = res[0]))
               );
             }
           })
@@ -62,9 +69,8 @@ export class BooksService {
         },
       })
       .pipe(
-        map((b) => {
-          b.map((book) => (book.url = book.url.replace(/\D/g, '')));
-          return b;
+        tap((b) => {
+          b.forEach((book) => (book.url = book.url.replace(/\D/g, '')));
         })
       )
       .subscribe((data) => {

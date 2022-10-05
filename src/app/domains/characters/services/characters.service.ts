@@ -1,7 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { isEmpty, isArray } from 'lodash';
-import { BehaviorSubject, Observable, map, switchMap, forkJoin } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  map,
+  switchMap,
+  forkJoin,
+  tap,
+} from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { Book } from '../../books/models/books.model';
@@ -48,13 +55,13 @@ export class CharactersService {
                 return forkJoin(
                   data[k].map((v: string) => this.getName(v))
                 ).pipe(
-                  map((res: string[]) => {
+                  tap((res: string[]) => {
                     cData[k] = res;
                   })
                 );
               } else {
                 return forkJoin([this.getName(data[k])]).pipe(
-                  map((res) => (cData[k] = res[0]))
+                  tap((res) => (cData[k] = res[0]))
                 );
               }
             })
@@ -72,11 +79,10 @@ export class CharactersService {
         },
       })
       .pipe(
-        map((cData) => {
-          cData.map(
+        tap((cData) => {
+          cData.forEach(
             (character) => (character.url = character.url.replace(/\D/g, ''))
           );
-          return cData;
         })
       )
       .subscribe((cData) => {
@@ -100,7 +106,7 @@ export class CharactersService {
 
   private getName(url: string): Observable<string> {
     return this.http
-      .get<Book>(url)
+      .get<Character | Book>(url)
       .pipe(map((b) => `${b.name}${url.replace(/\D/g, '')}`));
   }
 }

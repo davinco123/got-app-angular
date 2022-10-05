@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { never } from 'rxjs';
 
 import { CharactersDetailComponent } from './components/characters-detail/characters-detail.component';
 import { CharactersListComponent } from './components/characters-list/characters-list.component';

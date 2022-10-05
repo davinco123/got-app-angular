@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Character, NameAndId } from '../../models/characters.model';
+import { isArray } from 'lodash';
+import { Character, updateCharacter } from '../../models/characters.model';
 
 @Component({
   selector: 'app-characters-detail',
@@ -9,38 +10,36 @@ import { Character, NameAndId } from '../../models/characters.model';
 })
 export class CharactersDetailComponent {
   public character: Character;
-  public father: NameAndId;
-  public mother: NameAndId;
-  public spouse: NameAndId;
-  public books: NameAndId[];
-  public povBooks: NameAndId[];
-  public allegiances: NameAndId[];
+  public updateCharacterInfo: updateCharacter;
 
-  constructor(route: ActivatedRoute) {
+  constructor(public route: ActivatedRoute) {
     route.data.subscribe(() => {
       this.character = route.snapshot.data.character;
+      const keyArrays = [
+        'father',
+        'mother',
+        'spouse',
+        'allegiances',
+        'books',
+        'povBooks',
+      ];
 
-      this.father = this.createNameAndId(this.character.father);
+      const data: any = {};
 
-      this.mother = this.createNameAndId(this.character.mother);
-
-      this.spouse = this.createNameAndId(this.character.spouse);
-
-      this.books = this.character.books.map((v) => {
-        return this.createNameAndId(v);
-      });
-
-      this.povBooks = this.character.povBooks.map((v) => {
-        return this.createNameAndId(v);
-      });
-
-      this.allegiances = this.character.allegiances.map((v) => {
-        return this.createNameAndId(v);
-      });
+      for (const [key, value] of Object.entries(this.character)) {
+        if (keyArrays.includes(key)) {
+          if (!isArray(value)) {
+            data[key] = this.createNameAndId(value);
+          } else {
+            data[key] = value.map((v) => this.createNameAndId(v));
+          }
+        }
+      }
+      this.updateCharacterInfo = data;
     });
   }
 
-  private createNameAndId(value: string): NameAndId {
+  private createNameAndId(value: string) {
     return {
       id: value.replace(/\D/g, ''),
       name: value.replace(/[0-9]/g, ''),

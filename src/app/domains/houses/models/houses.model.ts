@@ -1,3 +1,5 @@
+import { NameAndId } from '../../characters/models/characters.model';
+
 export interface House {
   url: string;
   name: string;
@@ -15,4 +17,13 @@ export interface House {
   ancestralWeapons: string[];
   cadetBranches: string[];
   swornMembers: string[];
+}
+
+export interface updateHouse {
+  currentLord: NameAndId;
+  heir: NameAndId;
+  overlord: NameAndId;
+  founder: NameAndId;
+  cadetBranches: NameAndId[];
+  swornMembers: NameAndId[];
 }

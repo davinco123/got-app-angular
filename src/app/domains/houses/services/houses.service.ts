@@ -1,7 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { isArray, isEmpty } from 'lodash';
-import { BehaviorSubject, Observable, map, switchMap, forkJoin } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  map,
+  switchMap,
+  forkJoin,
+  tap,
+} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Character } from '../../characters/models/characters.model';
 import { House } from '../models/houses.model';
@@ -44,13 +51,13 @@ export class HousesService {
           Object.keys(data).map((k) => {
             if (isArray(data[k])) {
               return forkJoin(data[k].map((v: string) => this.getName(v))).pipe(
-                map((res: string[]) => {
+                tap((res: string[]) => {
                   hData[k] = res;
                 })
               );
             } else {
               return forkJoin([this.getName(data[k])]).pipe(
-                map((res) => (hData[k] = res[0]))
+                tap((res) => (hData[k] = res[0]))
               );
             }
           })
@@ -68,11 +75,10 @@ export class HousesService {
         },
       })
       .pipe(
-        map((hData) => {
-          hData.map((house) => {
+        tap((hData) => {
+          hData.forEach((house) => {
             house.url = house.url.replace(/\D/g, '');
           });
-          return hData;
         })
       )
       .subscribe((hData) => {

@@ -17,6 +17,15 @@ export interface Character {
   playedBy: string[];
 }
 
+export interface updateCharacter {
+  father: NameAndId;
+  mother: NameAndId;
+  spouse: NameAndId;
+  allegiances: NameAndId[];
+  books: NameAndId[];
+  povBooks: NameAndId[];
+}
+
 export interface NameAndId {
   id: string;
   name: string;

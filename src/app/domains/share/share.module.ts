@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollTrackerDirective } from './scroll-tracker.directive';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [ScrollTrackerDirective],
@@ -13,6 +14,7 @@ import { ScrollTrackerDirective } from './scroll-tracker.directive';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSkeletonLoaderModule,
   ],
   providers: [],
   exports: [
@@ -22,6 +24,7 @@ import { ScrollTrackerDirective } from './scroll-tracker.directive';
     FormsModule,
     ReactiveFormsModule,
     ScrollTrackerDirective,
+    NgxSkeletonLoaderModule,
   ],
 })
 export class ShareModule {}

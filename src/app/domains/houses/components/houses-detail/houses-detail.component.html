@@ -4,19 +4,20 @@
 <p>Catchphrase: {{house.words}}</p>
 <p>House Titles: {{house.titles}}</p>
 <p>House Seat: {{house.seats}}</p>
-<p>Current Lord: <a [routerLink]="['/characters/', currentLord.id]">{{currentLord.name}}</a></p>
-<p>Heir: <a [routerLink]="['/characters/', heir.id]">{{heir.name}}</a></p>
-<p>Overlord: <a [routerLink]="['/houses/', overlord.id]">{{overlord.name}}</a></p>
-<p>Founder: <a [routerLink]="['/characters/', founder.id]">{{founder.name}}</a></p>
+<p>Current Lord: <a
+        [routerLink]="['/characters/', updateHouseInfo.currentLord.id]">{{updateHouseInfo.currentLord.name}}</a></p>
+<p>Heir: <a [routerLink]="['/characters/', updateHouseInfo.heir.id]">{{updateHouseInfo.heir.name}}</a></p>
+<p>Overlord: <a [routerLink]="['/houses/', updateHouseInfo.overlord.id]">{{updateHouseInfo.overlord.name}}</a></p>
+<p>Founder: <a [routerLink]="['/characters/', updateHouseInfo.founder.id]">{{updateHouseInfo.founder.name}}</a></p>
 <p>Founded: {{house.founded}}</p>
 <p>Ancenstral Weapons: {{house.ancestralWeapons}}</p>
 <p>Cadet Branches: -
-    <ng-container *ngFor="let cadetBranch of cadetBranches">
+    <ng-container *ngFor="let cadetBranch of updateHouseInfo.cadetBranches">
         <a [routerLink]="['/houses/', cadetBranch.id]">{{cadetBranch.name}}</a> -
     </ng-container>
 </p>
 <p>Sworn Members: -
-    <ng-container *ngFor="let member of swornMembers">
+    <ng-container *ngFor="let member of updateHouseInfo.swornMembers">
         <a [routerLink]="['/characters/', member.id]">{{member.name}}</a> -
     </ng-container>
 </p>
