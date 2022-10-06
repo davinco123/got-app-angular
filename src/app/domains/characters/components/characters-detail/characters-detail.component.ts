@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
+import { NameAndId } from 'src/app/domains/share/models/share.model';
 import { Character, updateCharacter } from '../../models/characters.model';
 import { CharactersService } from '../../services/characters.service';
 
@@ -58,7 +59,7 @@ export class CharactersDetailComponent implements OnInit {
     });
   }
 
-  private createNameAndId(value: string) {
+  private createNameAndId(value: string): NameAndId {
     return {
       id: value.replace(/\D/g, ''),
       name: value.replace(/[0-9]/g, ''),

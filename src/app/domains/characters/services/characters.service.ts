@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { isEmpty, isArray } from 'lodash';
+import { isEmpty, isArray } from 'lodash-es';
 import {
   BehaviorSubject,
   Observable,

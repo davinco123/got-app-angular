@@ -3,5 +3,5 @@
         placeholder="Enter text to search" autofocus>
 </div>
 
-<app-books-item [bookList]="bookList$ | async"></app-books-item>
+<app-books-item *ngIf="!isLoading" [bookList]="bookList$ | async"></app-books-item>
 <ngx-skeleton-loader *ngIf="isLoading" count="20" appearance="line"></ngx-skeleton-loader>

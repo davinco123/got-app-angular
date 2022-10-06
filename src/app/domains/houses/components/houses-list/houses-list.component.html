@@ -3,7 +3,7 @@
         placeholder="Enter text to search" autofocus>
 </div>
 
-<app-houses-item [houseList]="houseList$ | async" (scrollingFinished)="onScrollingFinished()">
+<app-houses-item *ngIf="!isLoading" [houseList]="houseList$ | async" (scrollingFinished)="onScrollingFinished()">
 </app-houses-item>
 
 <ngx-skeleton-loader *ngIf="isLoading" count="20" appearance="line"></ngx-skeleton-loader>

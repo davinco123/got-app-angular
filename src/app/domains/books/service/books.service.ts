@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { isArray, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import {
   BehaviorSubject,
   Observable,
@@ -42,19 +42,11 @@ export class BooksService {
         if (!isEmpty(data)) {
           return forkJoin(
             Object.keys(data).map((k) => {
-              if (isArray(data[k])) {
-                return forkJoin(
-                  data[k].map((v: string) => this.getName(v))
-                ).pipe(
-                  tap((res: string[]) => {
-                    bData[k] = res;
-                  })
-                );
-              } else {
-                return forkJoin([this.getName(data[k])]).pipe(
-                  tap((res) => (bData[k] = res[0]))
-                );
-              }
+              return forkJoin(data[k].map((v: string) => this.getName(v))).pipe(
+                tap((res: string[]) => {
+                  bData[k] = res;
+                })
+              );
             })
           ).pipe(map(() => bData));
         } else {

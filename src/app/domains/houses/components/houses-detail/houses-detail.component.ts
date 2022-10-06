@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { isArray } from 'lodash';
+import { isArray } from 'lodash-es';
 
 import { NameAndId } from 'src/app/domains/share/models/share.model';
 import { House, updateHouse } from '../../models/houses.model';

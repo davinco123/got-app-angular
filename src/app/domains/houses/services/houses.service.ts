@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { isArray, isEmpty } from 'lodash';
+import { isArray, isEmpty } from 'lodash-es';
 import {
   BehaviorSubject,
   Observable,
@@ -16,11 +16,11 @@ import { House } from '../models/houses.model';
 
 @Injectable({ providedIn: 'root' })
 export class HousesService {
-  private housesSubject = new BehaviorSubject<House[]>([]);
   public page = 1;
   public housesList: House[] = [];
   public saveList: House[] = [];
   public housesListLength = 10000;
+  private housesSubject = new BehaviorSubject<House[]>([]);
 
   constructor(private http: HttpClient) {}
 
