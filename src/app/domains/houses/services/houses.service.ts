@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isArray, isEmpty } from 'lodash-es';
 import {
   BehaviorSubject,
@@ -9,6 +10,7 @@ import {
   forkJoin,
   tap,
   of,
+  catchError,
 } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Character } from '../../characters/models/characters.model';
@@ -22,7 +24,11 @@ export class HousesService {
   public housesListLength = 10000;
   private housesSubject = new BehaviorSubject<House[]>([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   public get housesList$(): Observable<House[]> {
     return this.housesSubject.asObservable();
@@ -69,6 +75,12 @@ export class HousesService {
         } else {
           return of(hData);
         }
+      }),
+      catchError(() => {
+        this.router.navigate(['not-found'], {
+          relativeTo: this.route.parent,
+        });
+        return of();
       })
     );
   }

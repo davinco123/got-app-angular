@@ -29,6 +29,13 @@ const appRoutes: Routes = [
     loadChildren: () =>
       import('./domains/houses/houses.module').then((m) => m.HousesModule),
   },
+  {
+    path: 'not-found',
+    loadChildren: () =>
+      import('./domains/error/error.module').then((m) => m.ErrorModule),
+  },
+
+  { path: '**', redirectTo: '/not-found' },
 ];
 
 @NgModule({

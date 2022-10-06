@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isEmpty, isArray } from 'lodash-es';
 import {
   BehaviorSubject,
@@ -9,6 +10,7 @@ import {
   forkJoin,
   tap,
   of,
+  catchError,
 } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -22,7 +24,11 @@ export class CharactersService {
   public charactersList: Character[] = [];
   public totalCharacterList = 10000;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   public get charactersList$(): Observable<Character[]> {
     return this.charactersSubject.asObservable();
@@ -48,7 +54,6 @@ export class CharactersService {
           //     value: cData[key],
           //   }))
           //   .filter((pair) => !isEmpty(pair.value))
-          //   .reduce((a, b) => Object.assign(a, b), {});
 
           const data = {};
           // for (const key of keyArrays) {
@@ -85,6 +90,12 @@ export class CharactersService {
           } else {
             return of(cData);
           }
+        }),
+        catchError(() => {
+          this.router.navigate(['not-found'], {
+            relativeTo: this.route.parent,
+          });
+          return of();
         })
       );
   }

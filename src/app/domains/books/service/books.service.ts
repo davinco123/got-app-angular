@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isEmpty } from 'lodash-es';
 import {
   BehaviorSubject,
@@ -9,6 +10,7 @@ import {
   forkJoin,
   tap,
   of,
+  catchError,
 } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -20,7 +22,11 @@ export class BooksService {
   private booksSubject = new BehaviorSubject<Book[]>([]);
   public booksList: Book[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   public get booksList$(): Observable<Book[]> {
     return this.booksSubject.asObservable();
@@ -52,6 +58,12 @@ export class BooksService {
         } else {
           return of(bData);
         }
+      }),
+      catchError(() => {
+        this.router.navigate(['not-found'], {
+          relativeTo: this.route.parent,
+        });
+        return of();
       })
     );
   }
