@@ -11,7 +11,6 @@ import { CharactersService } from '../../services/characters.service';
 })
 export class CharactersDetailComponent implements OnInit {
   public character: Character;
-  public id = '';
   public updateCharacterInfo: updateCharacter;
 
   constructor(
@@ -22,11 +21,13 @@ export class CharactersDetailComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      if (params.get('id') !== this.id) {
-        this.id = params.get('id');
+      let id = '';
+
+      if (params.get('id') !== id) {
+        id = params.get('id');
       }
 
-      this.charactersService.getCharacter(this.id).subscribe((cData) => {
+      this.charactersService.getCharacter(id).subscribe((cData) => {
         this.character = cData;
         const keyArrays = [
           'father',

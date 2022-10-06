@@ -12,7 +12,6 @@ import { BooksService } from '../../service/books.service';
 })
 export class BooksDetailsComponent implements OnInit {
   public book: Book;
-  public id = '';
   public showmore = false;
   public povCharacters: NameAndId[];
   public characters: NameAndId[];
@@ -24,11 +23,13 @@ export class BooksDetailsComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      if (params.get('id') !== this.id) {
-        this.id = params.get('id');
+      let id = '';
+
+      if (params.get('id') !== id) {
+        id = params.get('id');
       }
 
-      this.booksService.getBook(this.id).subscribe((bData) => {
+      this.booksService.getBook(id).subscribe((bData) => {
         this.book = bData;
 
         this.povCharacters = this.book.povCharacters.map((v) => {

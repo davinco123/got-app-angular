@@ -13,7 +13,6 @@ import { HousesService } from '../../services/houses.service';
 })
 export class HousesDetailComponent implements OnInit {
   public house: House;
-  public id = '';
   public updateHouseInfo: updateHouse;
 
   constructor(
@@ -24,11 +23,12 @@ export class HousesDetailComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      if (params.get('id') !== this.id) {
-        this.id = params.get('id');
+      let id = '';
+      if (params.get('id') !== id) {
+        id = params.get('id');
       }
 
-      this.housesService.getHouse(this.id).subscribe((hData) => {
+      this.housesService.getHouse(id).subscribe((hData) => {
         this.house = hData;
         const keyArray = [
           'currentLord',

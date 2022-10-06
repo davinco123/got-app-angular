@@ -30,6 +30,7 @@ export class HousesListComponent implements OnInit {
       .subscribe((value) => {
         if (!value) {
           this.housesService.housesList = [];
+          this.housesService.page = 1;
         }
         this.housesService.getHouses(value);
         this.isLoading = false;

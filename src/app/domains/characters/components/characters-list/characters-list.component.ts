@@ -30,6 +30,7 @@ export class CharactersListComponent implements OnInit {
       .subscribe((value: string) => {
         if (!value) {
           this.charactersService.charactersList = [];
+          this.charactersService.page = 1;
         }
         this.charactersService.getCharacters(value);
         this.isLoading = false;
