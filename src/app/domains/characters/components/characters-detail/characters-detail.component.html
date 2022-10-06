@@ -1,4 +1,4 @@
-<ngx-skeleton-loader *ngIf="!character" count="20" appearance="line"></ngx-skeleton-loader>
+<ngx-skeleton-loader animation="progress-dark" *ngIf="!character" count="20" appearance="line"></ngx-skeleton-loader>
 
 <ng-container *ngIf="character">
     <p> Name: <b>{{character.name}}</b></p>
@@ -17,19 +17,19 @@
     <p> Spouse: <a [routerLink]="['/characters/', updateCharacterInfo.spouse.id]">
             {{updateCharacterInfo.spouse.name}}</a>
     </p>
-    <p> Sworned Allegiances: -
+    <p> Sworned Allegiances:
         <ng-container *ngFor="let allegiance of updateCharacterInfo.allegiances">
-            <a [routerLink]="['/houses/', allegiance.id]">{{allegiance.name}}</a> -
+            <a [routerLink]="['/houses/', allegiance.id]">{{allegiance.name}}</a> |
         </ng-container>
     </p>
-    <p> Appeared in: -
+    <p> Appeared in:
         <ng-container *ngFor="let book of updateCharacterInfo.books">
-            <a [routerLink]="['/books/', book.id]">{{book.name}}</a> -
+            <a [routerLink]="['/books/', book.id]">{{book.name}}</a> |
         </ng-container>
     </p>
-    <p> Appeared as the pov character in: -
+    <p> Appeared as the pov character in:
         <ng-container *ngFor="let povBook of updateCharacterInfo.povBooks">
-            <a [routerLink]="['/books/', povBook.id]">{{povBook.name}}</a> -
+            <a [routerLink]="['/books/', povBook.id]">{{povBook.name}}</a> |
         </ng-container>
     </p>
     <p> Television series: {{character.tvSeries}} </p>

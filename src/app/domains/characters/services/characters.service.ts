@@ -42,7 +42,21 @@ export class CharactersService {
             'povBooks',
           ];
 
+          // const data = keyArrays
+          //   .map((key) => ({
+          //     key,
+          //     value: cData[key],
+          //   }))
+          //   .filter((pair) => !isEmpty(pair.value))
+          //   .reduce((a, b) => Object.assign(a, b), {});
+
           const data = {};
+          // for (const key of keyArrays) {
+          //   const value = cData[key];
+          //   if (!isEmpty(value)) {
+          //     data[key] = value;
+          //   }
+          // }
 
           for (const [key, value] of Object.entries(cData)) {
             if (keyArrays.includes(key) && !isEmpty(value)) {

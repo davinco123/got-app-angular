@@ -1,7 +1,7 @@
 <div>
-    <ul class="list-group" *ngFor="let book of bookList">
+    <li class="list-group" *ngFor="let book of bookList">
         <a class="list-group-item" type="button" [routerLink]="[book.url]">
             {{book.name}}
         </a>
-    </ul>
+    </li>
 </div>

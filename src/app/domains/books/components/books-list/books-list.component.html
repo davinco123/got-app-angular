@@ -4,4 +4,4 @@
 </div>
 
 <app-books-item *ngIf="!isLoading" [bookList]="bookList$ | async"></app-books-item>
-<ngx-skeleton-loader *ngIf="isLoading" count="20" appearance="line"></ngx-skeleton-loader>
+<ngx-skeleton-loader animation="progress-dark" *ngIf="isLoading" count="20" appearance="line"></ngx-skeleton-loader>

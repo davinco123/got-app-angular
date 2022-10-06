@@ -1,7 +1,7 @@
 <div scrollTracker (scrollingFinished)="onScrollingFinished()" scrollTracker>
-    <ul class="list-group" *ngFor="let house of houseList">
+    <li class="list-group" *ngFor="let house of houseList">
         <a class="list-group-item" type="button" [routerLink]="[house.url]">
             {{house.name}}
         </a>
-    </ul>
+    </li>
 </div>

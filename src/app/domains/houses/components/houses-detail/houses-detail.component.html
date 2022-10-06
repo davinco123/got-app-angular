@@ -1,4 +1,4 @@
-<ngx-skeleton-loader *ngIf="!house" count="20" appearance="line"></ngx-skeleton-loader>
+<ngx-skeleton-loader *ngIf="!house" animation="progress-dark" count="20" appearance="line"></ngx-skeleton-loader>
 
 <ng-container *ngIf="house">
     <p>Name: <b>{{house.name}}</b></p>
@@ -14,14 +14,14 @@
     <p>Founder: <a [routerLink]="['/characters/', updateHouseInfo.founder.id]">{{updateHouseInfo.founder.name}}</a></p>
     <p>Founded: {{house.founded}}</p>
     <p>Ancenstral Weapons: {{house.ancestralWeapons}}</p>
-    <p>Cadet Branches: -
+    <p>Cadet Branches:
         <ng-container *ngFor="let cadetBranch of updateHouseInfo.cadetBranches">
-            <a [routerLink]="['/houses/', cadetBranch.id]">{{cadetBranch.name}}</a> -
+            <a [routerLink]="['/houses/', cadetBranch.id]">{{cadetBranch.name}}</a> |
         </ng-container>
     </p>
-    <p>Sworn Members: -
+    <p>Sworn Members:
         <ng-container *ngFor="let member of updateHouseInfo.swornMembers">
-            <a [routerLink]="['/characters/', member.id]">{{member.name}}</a> -
+            <a [routerLink]="['/characters/', member.id]">{{member.name}}</a> |
         </ng-container>
     </p>
 </ng-container>
