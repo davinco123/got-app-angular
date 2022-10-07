@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as _ from 'lodash';
 import { isEmpty, isArray } from 'lodash-es';
 import {
   BehaviorSubject,
@@ -48,26 +49,28 @@ export class CharactersService {
             'povBooks',
           ];
 
-          // const data = keyArrays
-          //   .map((key) => ({
-          //     key,
-          //     value: cData[key],
-          //   }))
-          //   .filter((pair) => !isEmpty(pair.value))
+          // const data = {
+          //   ...keyArrays
+          //     .map((key) => ({
+          //       key,
+          //       value: cData[key],
+          //     }))
+          //     .filter((pair) => !isEmpty(pair.value)),
+          // };
 
           const data = {};
-          // for (const key of keyArrays) {
-          //   const value = cData[key];
-          //   if (!isEmpty(value)) {
-          //     data[key] = value;
-          //   }
-          // }
-
-          for (const [key, value] of Object.entries(cData)) {
-            if (keyArrays.includes(key) && !isEmpty(value)) {
+          for (const key of keyArrays) {
+            const value = cData[key];
+            if (!isEmpty(value)) {
               data[key] = value;
             }
           }
+
+          // for (const [key, value] of Object.entries(cData)) {
+          //   if (keyArrays.includes(key) && !isEmpty(value)) {
+          //     data[key] = value;
+          //   }
+          // }
 
           if (!isEmpty(data)) {
             return forkJoin(

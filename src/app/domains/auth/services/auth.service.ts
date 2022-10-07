@@ -12,4 +12,9 @@ export class AuthService {
     );
     this.router.navigate(['/books/']);
   }
+
+  public authLogout() {
+    localStorage.removeItem('userData');
+    this.router.navigate(['auth']);
+  }
 }

@@ -21,6 +21,7 @@ import { Book } from '../models/books.model';
 export class BooksService {
   private booksSubject = new BehaviorSubject<Book[]>([]);
   public booksList: Book[] = [];
+  public charactersList: string[] = [];
 
   constructor(
     private http: HttpClient,
@@ -48,13 +49,23 @@ export class BooksService {
         if (!isEmpty(data)) {
           return forkJoin(
             Object.keys(data).map((k) => {
-              return forkJoin(data[k].map((v: string) => this.getName(v))).pipe(
+              return forkJoin(
+                data[k].slice(0, 20).map((v: string) => this.getName(v))
+              ).pipe(
                 tap((res: string[]) => {
                   bData[k] = res;
                 })
               );
             })
-          ).pipe(map(() => bData));
+          ).pipe(
+            map(() => {
+              this.charactersList = data['characters'].slice(
+                20,
+                data['characters'].length
+              );
+              return bData;
+            })
+          );
         } else {
           return of(bData);
         }
@@ -89,6 +100,22 @@ export class BooksService {
           this.booksSubject.next((this.booksList = data));
         }
       });
+  }
+
+  public getMoreCharacter(): Observable<string[]> {
+    if (!isEmpty(this.charactersList)) {
+      return forkJoin([
+        ...this.charactersList.slice(0, 20).map((v: string) => this.getName(v)),
+      ]).pipe(
+        map((value) => {
+          this.charactersList = this.charactersList.slice(
+            20,
+            this.charactersList.length
+          );
+          return value;
+        })
+      );
+    }
   }
 
   private getName(url: string): Observable<string> {
